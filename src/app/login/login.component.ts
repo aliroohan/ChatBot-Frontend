@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,11 @@ export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -34,10 +39,15 @@ export class LoginComponent {
     }
     
     console.log('Login form submitted:', this.loginForm.value);
-    
-    // API call for login would go here
-    // Redirect to dashboard or home page after successful login
-    this.router.navigate(['/']);
+    this.authService.login(this.loginForm.value).subscribe(
+      (response) => {
+        console.log('User logged in:', response);
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('Error logging in:', error.message);
+      }
+    );
   }
 
   forgotPassword() {
