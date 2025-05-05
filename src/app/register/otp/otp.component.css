@@ -1,0 +1,101 @@
+.otp-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.otp-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.instruction {
+  margin-bottom: 2rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.otp-input {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.otp-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.btn-verify {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-verify:hover {
+  background-color: #3a7bc8;
+}
+
+.resend-container {
+  margin-top: 1.5rem;
+  color: #666;
+}
+
+.btn-resend {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-resend:hover {
+  text-decoration: underline;
+}
