@@ -1,1 +1,84 @@
-<p>register works!</p>
+<div class="register-container">
+    <div class="register-card">
+        <h2>Create an Account</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input 
+                    type="text" 
+                    formControlName="name" 
+                    id="name" 
+                    class="form-control" 
+                    [ngClass]="{ 'is-invalid': submitted && formControls['name'].errors }"
+                    placeholder="Enter your full name"
+                />
+                <div *ngIf="submitted && formControls['name'].errors" class="error-message">
+                    <div *ngIf="formControls['name'].errors['required']">Name is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    formControlName="username" 
+                    id="username" 
+                    class="form-control" 
+                    [ngClass]="{ 'is-invalid': submitted && formControls['username'].errors }"
+                    placeholder="Choose a username"
+                />
+                <div *ngIf="submitted && formControls['username'].errors" class="error-message">
+                    <div *ngIf="formControls['username'].errors['required']">Username is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input 
+                    type="email" 
+                    formControlName="email" 
+                    id="email" 
+                    class="form-control" 
+                    [ngClass]="{ 'is-invalid': submitted && formControls['email'].errors }"
+                    placeholder="Enter your email"
+                />
+                <div *ngIf="submitted && formControls['email'].errors" class="error-message">
+                    <div *ngIf="formControls['email'].errors['required']">Email is required</div>
+                    <div *ngIf="formControls['email'].errors['email']">Email must be a valid email address</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-input-container">
+                    <input 
+                        [type]="showPassword ? 'text' : 'password'" 
+                        formControlName="password" 
+                        id="password" 
+                        class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && formControls['password'].errors }"
+                        placeholder="Create a password"
+                    />
+                    <button 
+                        type="button" 
+                        class="toggle-password" 
+                        (click)="togglePasswordVisibility()">
+                        {{ showPassword ? 'Hide' : 'Show' }}
+                    </button>
+                </div>
+                <div *ngIf="submitted && formControls['password'].errors" class="error-message">
+                    <div *ngIf="formControls['password'].errors['required']">Password is required</div>
+                    <div *ngIf="formControls['password'].errors['minlength']">Password must be at least 6 characters</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-register">Sign Up</button>
+            </div>
+
+            <div class="form-footer">
+                Already have an account? <span (click)="login()">Login</span>
+            </div>
+        </form>
+    </div>
+</div>
