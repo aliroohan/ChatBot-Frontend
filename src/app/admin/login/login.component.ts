@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../Services/auth.service';
+import { AuthService } from '../../Services/adminAuth.service';
+import { DataService } from '../../Services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,13 @@ import { AuthService } from '../Services/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
+  showPassword = false;
 
   constructor(
     private formBuilder: FormBuilder, 
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private data: DataService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -29,6 +32,10 @@ export class LoginComponent {
 
   get formControls() {
     return this.loginForm.controls;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
@@ -42,6 +49,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe(
       (response) => {
         console.log('User logged in:', response);
+        localStorage.setItem('user', JSON.stringify(response));
         this.router.navigate(['/']);
       },
       (error) => {
@@ -51,7 +59,8 @@ export class LoginComponent {
   }
 
   forgotPassword() {
-    // Navigate to forgot password page
-    console.log('Forgot password clicked');
+    this.data.value = 'forgot';
+    
+    this.router.navigate(['/reset-password']);
   }
 } 

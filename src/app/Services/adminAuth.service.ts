@@ -9,6 +9,8 @@ export class AuthService {
 
   constructor(private http:HttpClient) { }
 
+
+
   approveUser(token: string) {
     return this.http.post(`${this.baseUrl}/approve/${token}`, {});
   }
@@ -26,8 +28,20 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/login`, user);
   }
 
+  resendOtp(email: any) {
+    return this.http.post(`${this.baseUrl}/generate-otp`, { email });
+  }
+
   verifyOtp(otp: any) {
     return this.http.post(`${this.baseUrl}/verify-otp`, otp);
+  }
+
+  forgetPassword(email: any) {
+    return this.http.post(`${this.baseUrl}/forget-password`, { email });
+  }
+
+  resetPassword(data: any) {
+    return this.http.post(`${this.baseUrl}/reset-password`, data);
   }
   
 }

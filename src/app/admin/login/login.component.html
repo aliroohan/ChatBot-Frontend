@@ -20,14 +20,22 @@
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    formControlName="password" 
-                    id="password" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formControls['password'].errors }"
-                    placeholder="Enter your password"
-                />
+                <div class="password-input-container">
+                    <input 
+                        [type]="showPassword ? 'text' : 'password'" 
+                        formControlName="password" 
+                        id="password" 
+                        class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && formControls['password'].errors }"
+                        placeholder="Enter your password"
+                    />
+                    <button 
+                        type="button" 
+                        class="toggle-password" 
+                        (click)="togglePasswordVisibility()">
+                        {{ showPassword ? 'Hide' : 'Show' }}
+                    </button>
+                </div>
                 <div *ngIf="submitted && formControls['password'].errors" class="error-message">
                     <div *ngIf="formControls['password'].errors['required']">Password is required</div>
                 </div>

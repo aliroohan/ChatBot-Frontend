@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../Services/auth.service';
+import { AuthService } from '../../Services/adminAuth.service';
+import { DataService } from '../../Services/data.service';
 
 @Component({
   selector: 'app-register',
@@ -14,8 +15,12 @@ import { AuthService } from '../Services/auth.service';
 export class RegisterComponent {
   registerForm: FormGroup;
   submitted = false;
+  showPassword = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       username: ['', [Validators.required]],
@@ -26,6 +31,10 @@ export class RegisterComponent {
 
   get formControls() {
     return this.registerForm.controls;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
