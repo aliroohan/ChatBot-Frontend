@@ -146,4 +146,8 @@ export class ResetPasswordComponent implements OnInit {
       }
     );
   }
+
+  backToLogin(): void {
+    this.router.navigate(['admin/login']);
+  }
 }

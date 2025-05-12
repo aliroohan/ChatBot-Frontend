@@ -60,7 +60,11 @@ export class LoginComponent {
 
   forgotPassword() {
     this.data.value = 'forgot';
-    
-    this.router.navigate(['/reset-password']);
+
+    this.router.navigate(['admin/reset-password']);
+  }
+
+  register() {
+    this.router.navigate(['admin/register']);
   }
 } 

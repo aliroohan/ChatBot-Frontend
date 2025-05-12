@@ -113,13 +113,13 @@ label {
   color: #666;
 }
 
-.form-footer a {
+.form-footer span {
   color: #4a90e2;
   text-decoration: none;
   font-weight: 500;
 }
 
-.form-footer a:hover {
+.form-footer span:hover {
   text-decoration: underline;
 }
 

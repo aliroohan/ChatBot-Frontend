@@ -89,7 +89,7 @@ export class OtpComponent implements OnInit {
     this.authService.verifyOtp({ otp, email: this.email }).subscribe(
       (response) => {
         console.log('OTP verified:', response);
-        this.router.navigate(['/login']);
+        this.router.navigate(['admin/login']);
       },
       (error) => {
         console.error('Error verifying OTP:', error);

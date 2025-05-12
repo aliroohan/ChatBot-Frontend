@@ -49,16 +49,17 @@ export class RegisterComponent {
     this.authService.register(this.registerForm.value).subscribe(
       (response) => {
         console.log('User registered:', response);
-        this.router.navigate(['/register/otp'], { 
+        this.router.navigate(['admin/register/otp'], { 
           queryParams: { email: this.registerForm.value.email }
         });
       },
       (error) => {
         console.error('Error registering user:', error);
       }
-    );
-    
-    
-    
+    );    
+  }
+
+  login() {
+    this.router.navigate(['admin/login']);
   }
 }
