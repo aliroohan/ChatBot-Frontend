@@ -49,8 +49,8 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe(
       (response) => {
         console.log('User logged in:', response);
-        localStorage.setItem('user', JSON.stringify(response));
-        this.router.navigate(['/']);
+        localStorage.setItem('admin', JSON.stringify(response));
+        this.router.navigate(['/admin/documents']);
       },
       (error) => {
         console.error('Error logging in:', error.message);
@@ -65,6 +65,6 @@ export class LoginComponent {
   }
 
   register() {
-    this.router.navigate(['admin/register']);
+    this.router.navigate(['admin/signup']);
   }
 } 

@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Welcome to Our Application</h1>
+  
+  <div class="options-container">
+    <!-- Admin Section -->
+    <div class="option-card admin-card">
+      <h2>Admin</h2>
+      <div class="hover-options">
+        <button (click)="navigateTo('/admin/login')" class="hover-btn">Login</button>
+        <button (click)="navigateTo('/admin/signup')" class="hover-btn">Sign Up</button>
+      </div>
+    </div>
+
+    <!-- User Section -->
+    <div class="option-card user-card">
+      <h2>User</h2>
+      <div class="hover-options">
+        <button (click)="navigateTo('/user/login')" class="hover-btn">Login</button>
+        <button (click)="navigateTo('/user/signup')" class="hover-btn">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>

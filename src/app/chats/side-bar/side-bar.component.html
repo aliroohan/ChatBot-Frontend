@@ -1,0 +1,20 @@
+<div class="sidebar" [class.hidden]="!isVisible">
+  <div class="sidebar-header">
+    <button class="new-chat-btn" (click)="startNewChat()">
+      <span>+ New Chat</span>
+    </button>
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <span>{{ isVisible ? '←' : '→' }}</span>
+    </button>
+  </div>
+  
+  <div class="chat-history">
+    <h3>Chat History</h3>
+    <div class="chat-list">
+      <div *ngFor="let chat of chats" class="chat-item" (click)="selectChat(chat.id)">
+        <span class="chat-title">{{ chat.title }}</span>
+        <span class="chat-date">{{ chat.date | date:'short' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

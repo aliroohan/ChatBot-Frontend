@@ -51,7 +51,7 @@ export class LoginComponent {
       (response) => {
         console.log('User logged in:', response);
         localStorage.setItem('user', JSON.stringify(response));
-        this.router.navigate(['/']);
+        this.router.navigate(['/chat/:id']);
       },
       (error) => {
         console.error('Error logging in:', error.message);
@@ -60,7 +60,7 @@ export class LoginComponent {
   }
 
   register() {
-    this.router.navigate(['user/register']);
+    this.router.navigate(['user/signup']);
   }
 
   forgotPassword() {

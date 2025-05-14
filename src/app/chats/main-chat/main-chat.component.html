@@ -1,0 +1,44 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="chat-title">
+      <h2>{{ chatTitle }}</h2>
+    </div>
+    <button class="signout-btn" (click)="signOut()">
+      Sign Out
+    </button>
+  </div>
+
+  <div class="messages-container" #messagesContainer>
+    <div *ngFor="let message of messages" class="message" [ngClass]="{'user-message': message.isUser, 'bot-message': !message.isUser}">
+      <div class="message-content">
+        {{ message.content }}
+      </div>
+    </div>
+    <div *ngIf="isLoading" class="message bot-message">
+      <div class="message-content">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="input-container">
+    <form (ngSubmit)="sendMessage()" class="message-form">
+      <input 
+        type="text" 
+        [(ngModel)]="newMessage" 
+        name="newMessage"
+        placeholder="Type your message..."
+        
+        [disabled]="isLoading"
+        #messageInput
+      >
+      <button type="submit" [disabled]="!newMessage.trim() || isLoading">
+        Send
+      </button>
+    </form>
+  </div>
+</div>

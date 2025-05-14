@@ -1,0 +1,102 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.options-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.option-card {
+  position: relative;
+  width: 250px;
+  height: 200px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+}
+
+.option-card h2 {
+  color: #333;
+  font-size: 1.8rem;
+  margin: 0;
+  z-index: 1;
+}
+
+.hover-options {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.option-card:hover .hover-options {
+  opacity: 1;
+}
+
+.hover-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 80%;
+}
+
+.hover-btn:hover {
+  background: #0056b3;
+}
+
+.admin-card {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+.admin-card h2 {
+  color: white;
+}
+
+.user-card {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.user-card h2 {
+  color: white;
+}

@@ -1,0 +1,9 @@
+<div class="app-container">
+  <app-side-bar [isVisible]="isSidebarVisible" (visibilityChange)="onSidebarVisibilityChange($event)"></app-side-bar>
+  <div class="chat-container" [class.sidebar-hidden]="!isSidebarVisible">
+    <button *ngIf="!isSidebarVisible" class="show-sidebar-btn" (click)="toggleSidebar()" type="button">
+      <span>→</span>
+    </button>
+    <app-main-chat></app-main-chat>
+  </div>
+</div>

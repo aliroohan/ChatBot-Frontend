@@ -1,0 +1,54 @@
+<div class="upload-overlay" *ngIf="isVisible">
+  <div class="upload-container">
+    <div class="upload-header">
+      <h2>Upload File</h2>
+      <button class="close-button" (click)="hide()">×</button>
+    </div>
+    
+    <div class="upload-content">
+      <div class="file-input-container" *ngIf="!selectedFile">
+        <input 
+          type="file" 
+          id="fileInput" 
+          (change)="onFileSelected($event)"
+          class="file-input"
+        >
+        <label for="fileInput" class="file-input-label">
+          <span class="upload-icon">📁</span>
+          <span>Choose a file or drag it here</span>
+        </label>
+      </div>
+
+      <div class="selected-file" *ngIf="selectedFile">
+        <div class="file-info">
+          <span class="file-name">{{ selectedFile.name }}</span>
+          <span class="file-size">{{ (selectedFile.size / 1024).toFixed(2) }} KB</span>
+        </div>
+        
+        <div class="upload-progress" *ngIf="isUploading">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+          </div>
+          <span class="progress-text">{{ uploadProgress }}%</span>
+        </div>
+
+        <div class="upload-actions">
+          <button 
+            class="upload-button" 
+            (click)="uploadFile()" 
+            [disabled]="isUploading"
+          >
+            {{ isUploading ? 'Uploading...' : 'Upload' }}
+          </button>
+          <button 
+            class="cancel-button" 
+            (click)="selectedFile = null" 
+            [disabled]="isUploading"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

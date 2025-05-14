@@ -48,7 +48,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Get email from route params if available
     this.route.queryParams.subscribe(params => {
       const emailParam = params['email'] || '';
       if (emailParam) {
@@ -70,7 +69,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   sendOtp(): void {
-    // Mark email field as touched to show validation errors
     this.resetPasswordForm.get('email')?.markAsTouched();
     
     if (this.resetPasswordForm.get('email')?.invalid) {
@@ -79,7 +77,7 @@ export class ResetPasswordComponent implements OnInit {
     
     const email = this.resetPasswordForm.get('email')?.value;
     
-    // Call auth service to send OTP
+    
     this.authService.resendOtp(email).subscribe(
       (response: any) => {
         console.log('OTP sent successfully');
