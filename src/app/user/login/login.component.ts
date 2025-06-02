@@ -51,6 +51,7 @@ export class LoginComponent {
       (response) => {
         console.log('User logged in:', response);
         localStorage.setItem('user', JSON.stringify(response));
+        localStorage.removeItem('admin');
         this.router.navigate(['/chat/:id']);
       },
       (error) => {

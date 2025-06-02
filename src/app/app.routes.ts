@@ -31,5 +31,5 @@ export const routes: Routes = [
   { path: 'user/otp', component: UserOtpComponent },
   { path: 'user/reset-password', component: UserResetPasswordComponent },
   { path: 'chat/:id', component: ChatComponent, canActivate: [userGuard] },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'home' }
 ];

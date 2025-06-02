@@ -50,6 +50,7 @@ export class LoginComponent {
       (response) => {
         console.log('User logged in:', response);
         localStorage.setItem('admin', JSON.stringify(response));
+        localStorage.removeItem('user');
         this.router.navigate(['/admin/documents']);
       },
       (error) => {

@@ -8,7 +8,7 @@
 
 .register-card {
   width: 100%;
-  max-width: 450px;
+  max-width: 400px;
   padding: 2rem;
   background-color: white;
   border-radius: 8px;
@@ -34,10 +34,10 @@ label {
 }
 
 .form-control {
-  width: 95%;
+  width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 20px;
   font-size: 1rem;
   transition: border-color 0.2s;
 }

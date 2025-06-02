@@ -33,7 +33,9 @@
                         type="button" 
                         class="toggle-password" 
                         (click)="togglePasswordVisibility()">
-                        {{ showPassword ? 'Hide' : 'Show' }}
+                        <span class="material-symbols-outlined">
+                            {{showPassword ? "visibility_off" : "visibility"}}
+                        </span>
                     </button>
                 </div>
                 <div *ngIf="submitted && formControls['password'].errors" class="error-message">
@@ -59,7 +61,7 @@
             </div>
 
             <div class="form-footer">
-                Don't have an account? <span (click)="register()" >Sign up</span>
+                Don't have an account? <span style="cursor: pointer;" (click)="register()" >Sign up</span>
             </div>
         </form>
     </div>
