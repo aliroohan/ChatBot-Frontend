@@ -1,83 +1,190 @@
-<div class="register-container">
+<div class="register-wrapper">
+  <div class="background-pattern">
+    <div class="pattern-overlay"></div>
+  </div>
+  
+  <div class="register-container">
     <div class="register-card">
-        <h2>Create an Account</h2>
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <input 
-                    type="text" 
-                    formControlName="name" 
-                    id="name" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formControls['name'].errors }"
-                    placeholder="Name"
-                />
-                <div *ngIf="submitted && formControls['name'].errors" class="error-message">
-                    <div *ngIf="formControls['name'].errors['required']">Name is required</div>
-                </div>
-            </div>
+      <div class="card-header">
+        <div class="logo-container">
+          <div class="logo-icon admin-logo">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h1 class="register-title">Admin Registration</h1>
+          <p class="register-subtitle">Create your administrator account</p>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <input 
-                    type="text" 
-                    formControlName="username" 
-                    id="username" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formControls['username'].errors }"
-                    placeholder="Username"
-                />
-                <div *ngIf="submitted && formControls['username'].errors" class="error-message">
-                    <div *ngIf="formControls['username'].errors['required']">Username is required</div>
-                </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        
+          <div class="form-group">
+            <label for="name" class="form-label">
+              <i class="fas fa-user"></i>
+              Full Name
+            </label>
+            <div class="input-container">
+              <input 
+                type="text" 
+                formControlName="name" 
+                id="name" 
+                class="form-input" 
+                [ngClass]="{ 'error': submitted && formControls['name'].errors }"
+                placeholder="Enter your full name"
+                autocomplete="name"
+              />
+              <div class="input-focus-line"></div>
             </div>
-
-            <div class="form-group">
-
-                <input 
-                    type="email" 
-                    formControlName="email" 
-                    id="email" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formControls['email'].errors }"
-                    placeholder="Email"
-                />
-                <div *ngIf="submitted && formControls['email'].errors" class="error-message">
-                    <div *ngIf="formControls['email'].errors['required']">Email is required</div>
-                    <div *ngIf="formControls['email'].errors['email']">Email must be a valid email address</div>
-                </div>
+            <div *ngIf="submitted && formControls['name'].errors" class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="formControls['name'].errors['required']">Full name is required</span>
             </div>
-
-            <div class="form-group">
-                <div class="password-input-container">
-                    <input 
-                        [type]="showPassword ? 'text' : 'password'" 
-                        formControlName="password" 
-                        id="password" 
-                        class="form-control" 
-                        [ngClass]="{ 'is-invalid': submitted && formControls['password'].errors }"
-                        placeholder="Password"
-                    />
-                    <button 
-                        type="button" 
-                        class="toggle-password" 
-                        (click)="togglePasswordVisibility()">
-                        <span class="material-symbols-outlined">
-                            {{showPassword ? "visibility_off" : "visibility"}}
-                        </span>
-                    </button>
-                </div>
-                <div *ngIf="submitted && formControls['password'].errors" class="error-message">
-                    <div *ngIf="formControls['password'].errors['required']">Password is required</div>
-                    <div *ngIf="formControls['password'].errors['minlength']">Password must be at least 6 characters</div>
-                </div>
+          
+          </div>
+          <div class="form-group">
+            <label for="username" class="form-label">
+              <i class="fas fa-at"></i>
+              Username
+            </label>
+            <div class="input-container">
+              <input 
+                type="text" 
+                formControlName="username" 
+                id="username" 
+                class="form-input" 
+                [ngClass]="{ 'error': submitted && formControls['username'].errors }"
+                placeholder="Choose a username"
+                autocomplete="username"
+              />
+              <div class="input-focus-line"></div>
             </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn-register">Sign Up</button>
+            <div *ngIf="submitted && formControls['username'].errors" class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="formControls['username'].errors['required']">Username is required</span>
             </div>
+          </div>
 
-            <div class="form-footer">
-                Already have an account? <span style="cursor: pointer;" (click)="login()">Login</span>
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <i class="fas fa-envelope"></i>
+            Email Address
+          </label>
+          <div class="input-container">
+            <input 
+              type="email" 
+              formControlName="email" 
+              id="email" 
+              class="form-input" 
+              [ngClass]="{ 'error': submitted && formControls['email'].errors }"
+              placeholder="Enter your email address"
+              autocomplete="email"
+            />
+            <div class="input-focus-line"></div>
+          </div>
+          <div *ngIf="submitted && formControls['email'].errors" class="error-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="formControls['email'].errors['required']">Email is required</span>
+            <span *ngIf="formControls['email'].errors['email']">Please enter a valid email address</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <i class="fas fa-lock"></i>
+            Password
+          </label>
+          <div class="input-container password-container">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              formControlName="password" 
+              id="password" 
+              class="form-input" 
+              [ngClass]="{ 'error': submitted && formControls['password'].errors }"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+            />
+            <button 
+              type="button" 
+              class="password-toggle" 
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+              <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+            <div class="input-focus-line"></div>
+          </div>
+          <div *ngIf="submitted && formControls['password'].errors" class="error-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="formControls['password'].errors['required']">Password is required</span>
+            <span *ngIf="formControls['password'].errors['minlength']">Password must be at least 6 characters</span>
+          </div>
+          
+          <div class="password-requirements">
+            <h4>Password Requirements:</h4>
+            <ul>
+              <li [ngClass]="{ 'valid': passwordChecks.minLength }">
+                <i class="fas fa-check"></i>
+                At least 8 characters
+              </li>
+              <li [ngClass]="{ 'valid': passwordChecks.hasNumber }">
+                <i class="fas fa-check"></i>
+                At least one number
+              </li>
+              <li [ngClass]="{ 'valid': passwordChecks.hasLetter }">
+                <i class="fas fa-check"></i>
+                At least one letter
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="terms-section">
+          <label class="checkbox-container">
+            <input 
+              type="checkbox" 
+              formControlName="acceptTerms" 
+              id="acceptTerms"
+            />
+            <span class="checkmark"></span>
+            <span class="checkbox-text">
+              I agree to the <a href="javascript:void(0)" class="terms-link">Terms of Service</a> and 
+              <a href="javascript:void(0)" class="terms-link">Privacy Policy</a>
+            </span>
+          </label>
+          <div *ngIf="submitted && formControls['acceptTerms']?.errors?.['required']" class="error-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="formControls['acceptTerms']?.errors?.['required']">You must accept the terms and conditions</span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="register-btn" [disabled]="registerForm.invalid || isLoading">
+            <span class="btn-content" *ngIf="!isLoading">
+              <i class="fas fa-user-plus"></i>
+              <span>Create Admin Account</span>
+            </span>
+            <div class="btn-loader" *ngIf="isLoading">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Creating Account...</span>
             </div>
-        </form>
+          </button>
+        </div>
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <div class="alternative-actions">
+          <button type="button" class="secondary-btn" (click)="login()">
+            <i class="fas fa-sign-in-alt"></i>
+            Already have an account? Sign In
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
+
+  <div class="floating-elements">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
 </div> 

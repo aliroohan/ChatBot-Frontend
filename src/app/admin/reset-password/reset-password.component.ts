@@ -1,19 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../Services/adminAuth.service';
-
-// Custom validator to check if passwords match
-export function MustMatch(controlName: string, matchingControlName: string): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const formGroup = control as FormGroup;
-    const controlValue = formGroup.controls[controlName].value;
-    const matchingControlValue = formGroup.controls[matchingControlName].value;
-
-    return controlValue === matchingControlValue ? null : { mustMatch: true };
-  };
-}
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { DataService } from '../../Services/data.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,37 +11,32 @@ export function MustMatch(controlName: string, matchingControlName: string): Val
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent {
   resetPasswordForm: FormGroup;
   submitted = false;
-  remainingTime: number = 60;
-  otpTimer: any;
-  otpSent = false;
   showPassword = false;
   showConfirmPassword = false;
+  isLoading = false;
+  currentStep = 1;
+  maskedEmail = '';
+  remainingTime = 0;
+  passwordStrength = 0;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
-    private authService: AuthService
+    private data: DataService
   ) {
     this.resetPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      otp: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
+      otp: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
-    }, {
-      validators: MustMatch('password', 'confirmPassword')
     });
-  }
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const emailParam = params['email'] || '';
-      if (emailParam) {
-        this.resetPasswordForm.get('email')?.setValue(emailParam);
-      }
+    // Watch for password changes to update strength
+    this.resetPasswordForm.get('password')?.valueChanges.subscribe(password => {
+      this.updatePasswordStrength(password);
     });
   }
 
@@ -60,92 +44,103 @@ export class ResetPasswordComponent implements OnInit {
     return this.resetPasswordForm.controls;
   }
 
-  togglePasswordVisibility(): void {
+  togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  toggleConfirmPasswordVisibility(): void {
+  toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  sendOtp(): void {
-    this.resetPasswordForm.get('email')?.markAsTouched();
-    
-    if (this.resetPasswordForm.get('email')?.invalid) {
-      return;
-    }
-    
-    const email = this.resetPasswordForm.get('email')?.value;
-    
-    
-    this.authService.resendOtp(email).subscribe(
-      (response: any) => {
-        console.log('OTP sent successfully');
-        this.otpSent = true;
-        this.startOtpTimer();
-      },
-      (error: any) => {
-        console.error('Error sending OTP:', error);
-      }
-    );
+  updatePasswordStrength(password: string) {
+    let strength = 0;
+    if (password && password.length >= 6) strength += 25;
+    if (password && /[A-Z]/.test(password)) strength += 25;
+    if (password && /[0-9]/.test(password)) strength += 25;
+    if (password && /[^A-Za-z0-9]/.test(password)) strength += 25;
+    this.passwordStrength = strength;
   }
 
-  startOtpTimer(): void {
+  getPasswordStrengthText(): string {
+    if (this.passwordStrength <= 25) return 'Weak';
+    if (this.passwordStrength <= 50) return 'Fair';
+    if (this.passwordStrength <= 75) return 'Good';
+    return 'Strong';
+  }
+
+  sendOtp() {
+    if (this.formControls['email'].invalid) return;
+    
+    this.isLoading = true;
+    this.maskedEmail = this.maskEmail(this.formControls['email'].value);
+    
+    // Simulate API call
+    setTimeout(() => {
+      this.isLoading = false;
+      this.currentStep = 2;
+      this.startTimer();
+    }, 2000);
+  }
+
+  maskEmail(email: string): string {
+    const [username, domain] = email.split('@');
+    const maskedUsername = username.charAt(0) + '*'.repeat(username.length - 2) + username.charAt(username.length - 1);
+    return `${maskedUsername}@${domain}`;
+  }
+
+  startTimer() {
     this.remainingTime = 60;
-    clearInterval(this.otpTimer);
-    this.otpTimer = setInterval(() => {
-      if (this.remainingTime > 0) {
-        this.remainingTime--;
-      } else {
-        clearInterval(this.otpTimer);
+    const timer = setInterval(() => {
+      this.remainingTime--;
+      if (this.remainingTime <= 0) {
+        clearInterval(timer);
       }
     }, 1000);
   }
 
-  resendOtp(): void {
-    const email = this.resetPasswordForm.get('email')?.value;
+  verifyOtp() {
+    if (this.formControls['otp'].invalid) return;
     
-    if (email) {
-      this.authService.resendOtp(email).subscribe(
-        (response: any) => {
-          console.log('OTP resent successfully');
-          this.startOtpTimer();
-        },
-        (error: any) => {
-          console.error('Error resending OTP:', error);
-        }
-      );
-    }
+    this.isLoading = true;
+    
+    // Simulate API call
+    setTimeout(() => {
+      this.isLoading = false;
+      this.currentStep = 3;
+    }, 1500);
   }
 
-  onSubmit(): void {
+  resendOtp() {
+    this.sendOtp();
+  }
+
+  onSubmit() {
     this.submitted = true;
     
-    if (this.resetPasswordForm.invalid) {
+    if (this.resetPasswordForm.invalid) return;
+    
+    if (this.formControls['password'].value !== this.formControls['confirmPassword'].value) {
+      this.formControls['confirmPassword'].setErrors({ mustMatch: true });
       return;
     }
     
-    const resetData = {
-      email: this.resetPasswordForm.get('email')?.value,
-      otp: this.formControls['otp'].value,
-      newPassword: this.formControls['password'].value
-    };
+    this.isLoading = true;
     
-    console.log('Reset password form submitted:', resetData);
-    
-    // Call auth service to reset password
-    this.authService.resetPassword(resetData).subscribe(
-      (response: any) => {
-        console.log('Password reset successful');
-        this.router.navigate(['/login']);
-      },
-      (error: any) => {
-        console.error('Error resetting password:', error);
-      }
-    );
+    // Simulate API call
+    setTimeout(() => {
+      this.isLoading = false;
+      console.log('Password reset successful');
+      this.router.navigate(['/admin/login']);
+    }, 2000);
   }
 
-  backToLogin(): void {
-    this.router.navigate(['admin/login']);
+  goBack() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  backToLogin() {
+    this.router.navigate(['/admin/login']);
   }
 }

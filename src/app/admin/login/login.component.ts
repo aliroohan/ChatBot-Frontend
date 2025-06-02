@@ -16,6 +16,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
   showPassword = false;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -45,15 +46,18 @@ export class LoginComponent {
       return;
     }
     
+    this.isLoading = true;
     console.log('Login form submitted:', this.loginForm.value);
     this.authService.login(this.loginForm.value).subscribe(
       (response) => {
+        this.isLoading = false;
         console.log('User logged in:', response);
         localStorage.setItem('admin', JSON.stringify(response));
         localStorage.removeItem('user');
         this.router.navigate(['/admin/documents']);
       },
       (error) => {
+        this.isLoading = false;
         console.error('Error logging in:', error.message);
       }
     );

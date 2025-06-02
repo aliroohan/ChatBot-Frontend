@@ -1,22 +1,69 @@
-<div class="container">
-  <h1>Welcome to Our Application</h1>
+<div class="hero-container">
+  <div class="background-animation">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+    </div>
+  </div>
   
-  <div class="options-container">
-    <!-- Admin Section -->
-    <div class="option-card admin-card">
-      <h2>Admin</h2>
-      <div class="hover-options">
-        <button (click)="navigateTo('/admin/login')" class="hover-btn">Login</button>
-        <button (click)="navigateTo('/admin/signup')" class="hover-btn">Sign Up</button>
-      </div>
+  <div class="content-wrapper">
+    <div class="hero-section">
+      <h1 class="hero-title">
+        <span class="gradient-text">Welcome to</span>
+        <span class="brand-name">ChatBot Assistant</span>
+      </h1>
+      <p class="hero-subtitle">Experience the future of intelligent conversations</p>
     </div>
 
-    <!-- User Section -->
-    <div class="option-card user-card">
-      <h2>User</h2>
-      <div class="hover-options">
-        <button (click)="navigateTo('/user/login')" class="hover-btn">Login</button>
-        <button (click)="navigateTo('/user/signup')" class="hover-btn">Sign Up</button>
+    <div class="auth-cards-container">
+      <!-- Admin Section -->
+      <div class="auth-card admin-card" (click)="expandCard('admin')">
+        <div class="card-header">
+          <div class="icon-container admin-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h2>Administrator</h2>
+          <p>Manage and control the platform</p>
+        </div>
+        
+        <div class="card-actions">
+          <button (click)="navigateTo('/admin/login'); $event.stopPropagation()" class="action-btn primary-btn">
+            <i class="fas fa-sign-in-alt"></i>
+            Login
+          </button>
+          <button (click)="navigateTo('/admin/signup'); $event.stopPropagation()" class="action-btn secondary-btn">
+            <i class="fas fa-user-plus"></i>
+            Register
+          </button>
+        </div>
+        
+        
+      </div>
+
+      <!-- User Section -->
+      <div class="auth-card user-card" (click)="expandCard('user')">
+        <div class="card-header">
+          <div class="icon-container user-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <h2>User Portal</h2>
+          <p>Access your personal chatbot</p>
+        </div>
+        
+        <div class="card-actions">
+          <button (click)="navigateTo('/user/login'); $event.stopPropagation()" class="action-btn primary-btn">
+            <i class="fas fa-sign-in-alt"></i>
+            Login
+          </button>
+          <button (click)="navigateTo('/user/signup'); $event.stopPropagation()" class="action-btn secondary-btn">
+            <i class="fas fa-user-plus"></i>
+            Register
+          </button>
+        </div>
+        
+        
       </div>
     </div>
   </div>

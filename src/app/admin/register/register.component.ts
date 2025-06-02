@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/adminAuth.service';
-import { DataService } from '../../Services/data.service';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +15,15 @@ export class RegisterComponent {
   registerForm: FormGroup;
   submitted = false;
   showPassword = false;
+  isLoading = false;
+  passwordChecks = {
+    minLength: false,
+    hasNumber: false,
+    hasLetter: false
+  };
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder, 
     private router: Router,
     private authService: AuthService
   ) {
@@ -25,7 +31,13 @@ export class RegisterComponent {
       name: ['', [Validators.required]],
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      acceptTerms: [false, [Validators.required]]
+    });
+
+    // Watch for password changes to update validation
+    this.registerForm.get('password')?.valueChanges.subscribe(password => {
+      this.updatePasswordChecks(password);
     });
   }
 
@@ -37,6 +49,12 @@ export class RegisterComponent {
     this.showPassword = !this.showPassword;
   }
 
+  updatePasswordChecks(password: string) {
+    this.passwordChecks.minLength = password ? password.length >= 6 : false;
+    this.passwordChecks.hasNumber = password ? /[0-9]/.test(password) : false;
+    this.passwordChecks.hasLetter = password ? /[a-zA-Z]/.test(password) : false;
+  }
+
   onSubmit() {
     this.submitted = true;
     
@@ -44,22 +62,23 @@ export class RegisterComponent {
       return;
     }
     
+    this.isLoading = true;
+    console.log('Register form submitted:', this.registerForm.value);
     
-    console.log('Registration form submitted:', this.registerForm.value);
     this.authService.register(this.registerForm.value).subscribe(
       (response) => {
-        console.log('User registered:', response);
-        this.router.navigate(['admin/register/otp'], { 
-          queryParams: { email: this.registerForm.value.email }
-        });
+        this.isLoading = false;
+        console.log('Admin registered:', response);
+        this.router.navigate(['/admin/signup/otp'], { queryParams: { email: this.registerForm.value.email } });
       },
       (error) => {
-        console.error('Error registering user:', error);
+        this.isLoading = false;
+        console.error('Error registering admin:', error.message);
       }
-    );    
+    );
   }
 
   login() {
-    this.router.navigate(['admin/login']);
+    this.router.navigate(['/admin/login']);
   }
 }

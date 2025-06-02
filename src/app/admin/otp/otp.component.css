@@ -1,101 +1,309 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .otp-container {
+  height: 100vh;
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
+  justify-content: center;
+  padding: 20px;
+}
+
+.otp-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: backgroundMove 15s linear infinite;
+}
+
+@keyframes backgroundMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
 }
 
 .otp-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 40px;
   width: 100%;
-  max-width: 450px;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 480px;
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 2;
   text-align: center;
 }
 
+.otp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 24px 24px 0 0;
+}
+
 h2 {
-  margin-bottom: 1rem;
-  color: #333;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
 }
 
 .instruction {
-  margin-bottom: 2rem;
-  color: #666;
+  color: #718096;
+  margin-bottom: 32px;
   font-size: 1rem;
+  line-height: 1.5;
 }
 
 .otp-inputs {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
-  gap: 1rem;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .otp-input {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 60px;
+  height: 60px;
   font-size: 1.5rem;
+  font-weight: 600;
   text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  color: #2d3748;
 }
 
 .otp-input:focus {
   outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.otp-input:not(:placeholder-shown) {
+  border-color: #667eea;
+  background: #f0f4ff;
+  color: #667eea;
 }
 
 .is-invalid {
-  border-color: #dc3545;
+  border-color: #e53e3e;
+  background: #fed7d7;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
 .error-message {
-  color: #dc3545;
+  color: #e53e3e;
   font-size: 0.875rem;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.error-message::before {
+  content: '⚠️';
+  font-size: 0.8rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .btn-verify {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #4a90e2;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-verify::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-verify:hover::before {
+  left: 100%;
 }
 
 .btn-verify:hover {
-  background-color: #3a7bc8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+}
+
+.btn-verify:active {
+  transform: translateY(0);
 }
 
 .resend-container {
-  margin-top: 1.5rem;
-  color: #666;
+  margin-top: 24px;
+  color: #718096;
+  font-size: 0.9rem;
 }
 
 .btn-resend {
   background: none;
   border: none;
-  color: #4a90e2;
-  font-weight: 500;
+  color: #667eea;
   cursor: pointer;
-  padding: 0;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .btn-resend:hover {
-  text-decoration: underline;
+  background: rgba(102, 126, 234, 0.1);
+  color: #5a67d8;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .otp-container {
+    padding: 15px;
+  }
+  
+  .otp-card {
+    padding: 30px 25px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  .otp-inputs {
+    gap: 12px;
+  }
+  
+  .otp-input {
+    width: 55px;
+    height: 55px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .otp-container {
+    padding: 10px;
+  }
+  
+  .otp-card {
+    padding: 25px 20px;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+  
+  .instruction {
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+  
+  .otp-inputs {
+    gap: 8px;
+  }
+  
+  .otp-input {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .btn-verify {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .otp-card {
+    padding: 25px;
+    max-width: 420px;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+  
+  .instruction {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .otp-inputs {
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+  
+  .otp-input {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .form-group {
+    margin-bottom: 18px;
+  }
+  
+  .resend-container {
+    margin-top: 18px;
+  }
 }

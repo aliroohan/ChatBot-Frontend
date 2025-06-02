@@ -10,9 +10,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  expandedCard: string | null = null;
+
   constructor(private router: Router) {}
 
   navigateTo(path: string) {
     this.router.navigate([path]);
+  }
+
+  expandCard(cardType: string) {
+    this.expandedCard = this.expandedCard === cardType ? null : cardType;
   }
 }
