@@ -14,22 +14,56 @@ import { DocumentsComponent } from './admin/documents/documents.component';
 import { adminGuard } from './guards/admin.guard';
 import { userGuard } from './guards/user.guard';
 import { HomeComponent } from './home/home.component';
+import { provideClientHydration } from '@angular/platform-browser';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'admin/login', component: LoginComponent },
-  { path: 'admin/signup', component: RegisterComponent },
-  { path: 'admin/signup/otp', component: OtpComponent },
-  { path: 'approve-user/:token', component: AproveComponent},
-  { path: 'reject-user/:token', component: RejectComponent},
+  { path: 'home',
+     component: HomeComponent },
+  { path: 'admin/login', 
+    component: LoginComponent 
+  },
+  { path: 'admin/signup',
+     component: RegisterComponent
+  },
+  { path: 'admin/signup/otp',
+     component: OtpComponent 
+  },
+  { path: 'approve-user/:token',
+     component: AproveComponent,
+     providers: [
+    {
+      provide: provideClientHydration(),
+      useValue: 'client'
+    }
+    ]
+  },
+  { path: 'reject-user/:token', 
+    component: RejectComponent,
+    providers: [
+    {
+      provide: provideClientHydration(),
+      useValue: 'client'
+    }
+  ]
+  },
   { path: 'admin/reset-password', component: ResetPasswordComponent },
   { path: 'admin/documents', component: DocumentsComponent, canActivate: [adminGuard]},
   { path: 'user/signup', component: UserRegisterComponent },
   { path: 'user/signup/otp', component: UserOtpComponent },
   { path: 'user/login', component: UserLoginComponent },
   { path: 'user/reset-password', component: UserResetPasswordComponent },
-  { path: 'chat/:id', component: ChatComponent, canActivate: [userGuard] },
+  { path: 'chat/:id', 
+    component: ChatComponent, 
+    canActivate: [userGuard],
+    providers: [
+      {
+        provide: provideClientHydration(),
+        useValue: 'client'
+      }
+    ]
+
+   },
   { path: '**', redirectTo: 'home' }
 ];
